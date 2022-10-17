@@ -5,7 +5,7 @@ node{
 
 try{
     properties([[$class: 'JobLocalConfiguration', changeReasonComment: ''], pipelineTriggers([pollSCM('* * * * *')])])
-    slackNotifications('STARTED')
+    sendSlackNotifications('STARTED')
     def mavenHome=tool name: 'maven3.8.6'
     
 	stage('CheckOutCode'){
@@ -44,12 +44,12 @@ throw e
 
 finally{
 
-slackNotifications(currentBuild.result)
+sendSlackNotifications(currentBuild.result)
 }
 	} //node closing
 	
 	/*
-def slackNotifications(String buildStatus = 'STARTED') {
+def sendSlackNotifications(String buildStatus = 'STARTED') {
   // build status of null means successful
   buildStatus =  buildStatus ?: 'SUCCESS'
 
